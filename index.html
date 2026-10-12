@@ -1,151 +1,419 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ha">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Grammar App</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
             margin: 0;
             padding: 0;
-            color: #1e293b;
+            color: var(--text-main);
         }
+
         .ll-header {
-            background-color: #1e293b;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             color: white;
-            padding: 20px;
+            padding: 30px 20px 25px;
             text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-        .lesson-card {
-            background: white;
-            padding: 15px 20px;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            border-left: 5px solid #2563eb;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .lesson-card:hover {
-            transform: translateY(-2px);
-        }
-        .lesson-card h3 {
-            margin: 0 0 5px 0;
-            color: #1e3a8a;
-        }
-        .lesson-card p {
+
+        .ll-header h1 {
             margin: 0;
-            font-size: 14px;
-            color: #64748b;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
+
+        .ll-header p {
+            margin: 8px 0 0;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: -15px auto 30px;
+            padding: 0 16px;
+        }
+
+        .search-box {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box i {
+            color: #94a3b8;
+            margin-right: 10px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 15px;
+        }
+
+        .lesson-card {
+            background: var(--card-bg);
+            padding: 18px 20px;
+            margin-bottom: 14px;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+            transition: all 0.25s ease;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.12);
+            border-color: var(--primary);
+        }
+
+        .lesson-icon {
+            width: 45px;
+            height: 45px;
+            background: #eff6ff;
+            color: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .lesson-info {
+            flex-grow: 1;
+        }
+
+        .lesson-info h3 {
+            margin: 0 0 4px 0;
+            font-size: 16px;
+            color: var(--text-main);
+        }
+
+        .lesson-info p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-sub);
+        }
+
+        .chevron {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
         .lesson-detail {
             display: none;
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            animation: fadeIn 0.3s ease;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .back-btn {
-            background: #2563eb;
-            color: white;
+            background: #f1f5f9;
+            color: var(--text-main);
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 10px 18px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
+
         .example-box {
-            background: #eff6ff;
-            border-left: 4px solid #3b82f6;
-            padding: 10px 15px;
-            margin: 10px 0;
-            border-radius: 4px;
+            background: #f0f9ff;
+            border-left: 4px solid var(--primary);
+            padding: 14px 16px;
+            margin: 16px 0;
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* DEVELOPER FOOTER */
+        .app-footer {
+            background: #0f172a;
+            color: white;
+            padding: 25px 20px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .app-footer h4 {
+            margin: 0 0 8px;
+            color: var(--accent);
+            font-size: 15px;
+        }
+
+        .app-footer p {
+            margin: 4px 0;
+            color: #94a3b8;
+        }
+
+        .app-footer a {
+            color: #38bdf8;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
     <header class="ll-header">
-        <h1>English Grammar App</h1>
-        <p>Koyi Ƙa'idojin Harshen Turanci cikin Sauƙi</p>
+        <h1><i class="fa-solid fa-graduation-cap"></i> English Grammar App</h1>
+        <p>Hanya Mai Sauƙi Don Koyo da Kwarewa a Harshen Turanci</p>
     </header>
 
     <main class="container">
-        <!-- JERIN DARUSSA (LESSONS LIST) -->
+
+        <!-- JERIN DARUSSA -->
         <div id="lessons-list">
-            <h2>Jerin Darussa (Lessons)</h2>
+
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" onkeyup="searchLessons()" placeholder="Nemi darasi...">
+            </div>
+
+            <h2 style="font-size: 18px; margin: 15px 0; color: #334155;">Cikakken Jerin Darussa</h2>
 
             <div class="lesson-card" onclick="openLesson('lesson-1')">
-                <h3>1. Nouns (Suna)</h3>
-                <p>Danna don karanta cikakken bayanin sunaye da misalai.</p>
+                <div class="lesson-icon"><i class="fa-solid fa-font"></i></div>
+                <div class="lesson-info">
+                    <h3>1. Nouns (Suna)</h3>
+                    <p>Nau'ikan sunaye da misalansu a jimla.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron"></i>
             </div>
 
             <div class="lesson-card" onclick="openLesson('lesson-2')">
-                <h3>2. Pronouns (Wakilin Suna)</h3>
-                <p>Danna don karanta cikakken bayanin wakilin suna.</p>
+                <div class="lesson-icon"><i class="fa-solid fa-user-tag"></i></div>
+                <div class="lesson-info">
+                    <h3>2. Pronouns (Wakilin Suna)</h3>
+                    <p>He, She, It, They, We da amfaninsu.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron"></i>
             </div>
 
             <div class="lesson-card" onclick="openLesson('lesson-3')">
-                <h3>3. Verbs (Aiki/Afe-Afe)</h3>
-                <p>Danna don karanta bayanin aikatau da nau'ikansa.</p>
+                <div class="lesson-icon"><i class="fa-solid fa-bolt"></i></div>
+                <div class="lesson-info">
+                    <h3>3. Verbs (Aikatau)</h3>
+                    <p>Kalmomin aiki da mataimakan aikatau.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron"></i>
             </div>
+
+            <div class="lesson-card" onclick="openLesson('lesson-4')">
+                <div class="lesson-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <div class="lesson-info">
+                    <h3>4. Adjectives (Siffa)</h3>
+                    <p>Yadda ake siffanta mutum ko abu.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron"></i>
+            </div>
+
+            <div class="lesson-card" onclick="openLesson('lesson-5')">
+                <div class="lesson-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                <div class="lesson-info">
+                    <h3>5. Adverbs (Bayanin Aikatau)</h3>
+                    <p>Bayanin yadda, yaushe, da ina aiki ya faru.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron"></i>
+            </div>
+
+            <div class="lesson-card" onclick="openLesson('lesson-6')">
+                <div class="lesson-icon"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="lesson-info">
+                    <h3>6. Prepositions (Haruffan Hada Suna)</h3>
+                    <p>In, On, At, Under, Between.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron"></i>
+            </div>
+
+            <div class="lesson-card" onclick="openLesson('lesson-7')">
+                <div class="lesson-icon"><i class="fa-solid fa-link"></i></div>
+                <div class="lesson-info">
+                    <h3>7. Conjunctions (Mahaɗa)</h3>
+                    <p>And, But, Or, Because da amfaninsu.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron"></i>
+            </div>
+
+            <div class="lesson-card" onclick="openLesson('lesson-8')">
+                <div class="lesson-icon"><i class="fa-solid fa-face-smile"></i></div>
+                <div class="lesson-info">
+                    <h3>8. Interjections (Makaranta)</h3>
+                    <p>Kalamu na mamaki, murna, ko zafi.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron"></i>
+            </div>
+
+            <div class="lesson-card" onclick="openLesson('lesson-9')">
+                <div class="lesson-icon"><i class="fa-solid fa-clock"></i></div>
+                <div class="lesson-info">
+                    <h3>9. Tenses (Lokutan Aiki)</h3>
+                    <p>Present, Past, da Future Tenses.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron"></i>
+            </div>
+
+            <div class="lesson-card" onclick="openLesson('lesson-10')">
+                <div class="lesson-icon"><i class="fa-solid fa-pen-nib"></i></div>
+                <div class="lesson-info">
+                    <h3>10. Sentences & Punctuation</h3>
+                    <p>Gina jimla da sanya alamomin rubutu.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right chevron"></i>
+            </div>
+
         </div>
 
-        <!-- DARASI NA 1: NOUNS -->
+        <!-- DETAILS FOR LESSONS -->
+
         <div id="lesson-1" class="lesson-detail">
-            <button class="back-btn" onclick="showList()">← Komawa Jerin Darussa</button>
+            <button class="back-btn" onclick="showList()"><i class="fa-solid fa-arrow-left"></i> Komawa Jerin Darussa</button>
             <h2>1. Nouns (Suna)</h2>
-            <p><strong>Ameen:</strong> Noun shi ne kalmar da ke wakiltar suna na mutum, wuri, dabba, ko abu.</p>
-            
+            <p><strong>Bayanani:</strong> Noun shi ne duk wata kalma da ke zama suna na mutum, wuri, dabba, ko abu.</p>
             <h3>Nau'ikan Nouns:</h3>
             <ul>
-                <li><strong>Proper Nouns:</strong> Sunayen na musamman (kamar: <em>Kano, Lukman, Nigeria</em>).</li>
-                <li><strong>Common Nouns:</strong> Sunaye na gaba ɗaya (kamar: <em>boy, city, school, book</em>).</li>
+                <li><strong>Proper Noun:</strong> Sunan musamman (kamar: <em>Lukman, Kano, Nigeria</em>).</li>
+                <li><strong>Common Noun:</strong> Suna na gaba-ɗaya (kamar: <em>boy, city, book</em>).</li>
+                <li><strong>Countable Noun:</strong> Abubuwan da za a iya ƙirga su (kamar: <em>car, pen</em>).</li>
+                <li><strong>Uncountable Noun:</strong> Ba za a iya ƙirga su ba (kamar: <em>water, sugar</em>).</li>
             </ul>
-
             <div class="example-box">
-                <strong>Misalai a Jimloli:</strong><br>
-                • <b>Lukman</b> is going to <b>Kano</b>.<br>
-                • The <b>book</b> is on the <b>table</b>.
+                <strong>Misalai a Jimla:</strong><br>
+                • <b>Lukman</b> lives in <b>Kano</b>.<br>
+                • Bring the <b>book</b> on the <b>table</b>.
             </div>
         </div>
 
-        <!-- DARASI NA 2: PRONOUNS -->
         <div id="lesson-2" class="lesson-detail">
-            <button class="back-btn" onclick="showList()">← Komawa Jerin Darussa</button>
+            <button class="back-btn" onclick="showList()"><i class="fa-solid fa-arrow-left"></i> Komawa Jerin Darussa</button>
             <h2>2. Pronouns (Wakilin Suna)</h2>
-            <p>Pronoun shi ne kalmar da ake amfani da ita maimakon Noun don guje wa sake maimaita suna.</p>
-            
+            <p>Pronoun shi ne kalmar da ake amfani da ita maimakon Noun don guje wa maimaita suna.</p>
             <div class="example-box">
-                <strong>Misalai:</strong><br>
-                • <b>He</b> (Shine - na namiji)<br>
-                • <b>She</b> (Ita - ta mace)<br>
-                • <b>They</b> (Su - mutane da yawa)<br>
-                • <b>It</b> (Shi/Ita - abu ko dabba)
+                <strong>Rukunin Pronouns:</strong><br>
+                • <b>I:</b> Ni | <b>He:</b> Shi | <b>She:</b> Ita | <b>They:</b> Su | <b>We:</b> Mu
             </div>
         </div>
 
-        <!-- DARASI NA 3: VERBS -->
         <div id="lesson-3" class="lesson-detail">
-            <button class="back-btn" onclick="showList()">← Komawa Jerin Darussa</button>
+            <button class="back-btn" onclick="showList()"><i class="fa-solid fa-arrow-left"></i> Komawa Jerin Darussa</button>
             <h2>3. Verbs (Aikatau)</h2>
-            <p>Verb shi ne kalmar da ke nuna aiki, aikata wani abu, ko yanayi.</p>
-            
+            <p>Verb shi ne zuciyar jimla, yana nuna aikin da aka yi ko yanayi.</p>
             <div class="example-box">
-                <strong>Misalai:</strong><br>
-                • Ali is <b>running</b> (Ali yana gudu).<br>
-                • She <b>reads</b> a book (Tana karanta littafi).
+                <strong>Misali:</strong> She is <b>reading</b> a book.
             </div>
         </div>
+
+        <div id="lesson-4" class="lesson-detail">
+            <button class="back-btn" onclick="showList()"><i class="fa-solid fa-arrow-left"></i> Komawa Jerin Darussa</button>
+            <h2>4. Adjectives (Siffa)</h2>
+            <p>Adjective yana siffanta Noun (girma, launi, ko kyau).</p>
+            <div class="example-box">
+                <strong>Misali:</strong> He bought a <b>new</b> car.
+            </div>
+        </div>
+
+        <div id="lesson-5" class="lesson-detail">
+            <button class="back-btn" onclick="showList()"><i class="fa-solid fa-arrow-left"></i> Komawa Jerin Darussa</button>
+            <h2>5. Adverbs (Bayanin Aikatau)</h2>
+            <p>Adverb yana ba da ƙarin bayani game da aiki (yadda, yaushe, ko ina).</p>
+            <div class="example-box">
+                <strong>Misali:</strong> He runs <b>fast</b>.
+            </div>
+        </div>
+
+        <div id="lesson-6" class="lesson-detail">
+            <button class="back-btn" onclick="showList()"><i class="fa-solid fa-arrow-left"></i> Komawa Jerin Darussa</button>
+            <h2>6. Prepositions</h2>
+            <p>In, On, At, Under, Between.</p>
+            <div class="example-box">
+                • The book is <b>on</b> the table.
+            </div>
+        </div>
+
+        <div id="lesson-7" class="lesson-detail">
+            <button class="back-btn" onclick="showList()"><i class="fa-solid fa-arrow-left"></i> Komawa Jerin Darussa</button>
+            <h2>7. Conjunctions</h2>
+            <p>And, But, Or, Because.</p>
+        </div>
+
+        <div id="lesson-8" class="lesson-detail">
+            <button class="back-btn" onclick="showList()"><i class="fa-solid fa-arrow-left"></i> Komawa Jerin Darussa</button>
+            <h2>8. Interjections</h2>
+            <p>Wow! Ouch! Bravo!</p>
+        </div>
+
+        <div id="lesson-9" class="lesson-detail">
+            <button class="back-btn" onclick="showList()"><i class="fa-solid fa-arrow-left"></i> Komawa Jerin Darussa</button>
+            <h2>9. Tenses</h2>
+            <p>Present, Past, da Future Tenses.</p>
+        </div>
+
+        <div id="lesson-10" class="lesson-detail">
+            <button class="back-btn" onclick="showList()"><i class="fa-solid fa-arrow-left"></i> Komawa Jerin Darussa</button>
+            <h2>10. Sentences & Punctuation</h2>
+            <p>Punctuation marks and sentence building.</p>
+        </div>
+
     </main>
+
+    <!-- FOOTER DA BAYANIN MARUBUCI -->
+    <footer class="app-footer">
+        <h4><i class="fa-solid fa-code"></i> Developer & Author Details</h4>
+        <p><strong>Lukuman Muhammad Abubakar Fagge</strong></p>
+        <p><i class="fa-solid fa-envelope"></i> <a href="mailto:lukmanmuhammadfagge@gmail.com">lukmanmuhammadfagge@gmail.com</a></p>
+        <p><i class="fa-solid fa-phone"></i> <a href="tel:09012166258">09012166258</a></p>
+        <p style="margin-top: 10px; font-size: 11px; color: #64748b;">© 2026 English Grammar App. All Rights Reserved.</p>
+    </footer>
 
     <script>
         function openLesson(lessonId) {
@@ -155,6 +423,7 @@
                 lessons[i].style.display = 'none';
             }
             document.getElementById(lessonId).style.display = 'block';
+            window.scrollTo(0,0);
         }
 
         function showList() {
@@ -163,8 +432,23 @@
                 lessons[i].style.display = 'none';
             }
             document.getElementById('lessons-list').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        function searchLessons() {
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var cards = document.getElementsByClassName('lesson-card');
+            for (var i = 0; i < cards.length; i++) {
+                var text = cards[i].innerText.toLowerCase();
+                if (text.includes(input)) {
+                    cards[i].style.display = "flex";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
         }
     </script>
 
 </body>
-</html>
+    </html>
+                
