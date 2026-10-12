@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Grammar App</title>
-    <link rel="stylesheet" href="design-system.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,6 +30,11 @@
             border-radius: 8px;
             border-left: 5px solid #2563eb;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .lesson-card:hover {
+            transform: translateY(-2px);
         }
         .lesson-card h3 {
             margin: 0 0 5px 0;
@@ -40,6 +44,30 @@
             margin: 0;
             font-size: 14px;
             color: #64748b;
+        }
+        .lesson-detail {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .back-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .example-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -51,33 +79,92 @@
     </header>
 
     <main class="container">
-        <h2>Jerin Darussa (Lessons)</h2>
+        <!-- JERIN DARUSSA (LESSONS LIST) -->
+        <div id="lessons-list">
+            <h2>Jerin Darussa (Lessons)</h2>
 
-        <div class="lesson-card">
-            <h3>1. Nouns (Suna)</h3>
-            <p>Koyi nau'ikan sunayen mutane, wurare, da abubuwa.</p>
+            <div class="lesson-card" onclick="openLesson('lesson-1')">
+                <h3>1. Nouns (Suna)</h3>
+                <p>Danna don karanta cikakken bayanin sunaye da misalai.</p>
+            </div>
+
+            <div class="lesson-card" onclick="openLesson('lesson-2')">
+                <h3>2. Pronouns (Wakilin Suna)</h3>
+                <p>Danna don karanta cikakken bayanin wakilin suna.</p>
+            </div>
+
+            <div class="lesson-card" onclick="openLesson('lesson-3')">
+                <h3>3. Verbs (Aiki/Afe-Afe)</h3>
+                <p>Danna don karanta bayanin aikatau da nau'ikansa.</p>
+            </div>
         </div>
 
-        <div class="lesson-card">
-            <h3>2. Pronouns (Wakilin Suna)</h3>
-            <p>Kalmomin da ake amfani da su maimakon suna (kamar He, She, It, They).</p>
+        <!-- DARASI NA 1: NOUNS -->
+        <div id="lesson-1" class="lesson-detail">
+            <button class="back-btn" onclick="showList()">← Komawa Jerin Darussa</button>
+            <h2>1. Nouns (Suna)</h2>
+            <p><strong>Ameen:</strong> Noun shi ne kalmar da ke wakiltar suna na mutum, wuri, dabba, ko abu.</p>
+            
+            <h3>Nau'ikan Nouns:</h3>
+            <ul>
+                <li><strong>Proper Nouns:</strong> Sunayen na musamman (kamar: <em>Kano, Lukman, Nigeria</em>).</li>
+                <li><strong>Common Nouns:</strong> Sunaye na gaba ɗaya (kamar: <em>boy, city, school, book</em>).</li>
+            </ul>
+
+            <div class="example-box">
+                <strong>Misalai a Jimloli:</strong><br>
+                • <b>Lukman</b> is going to <b>Kano</b>.<br>
+                • The <b>book</b> is on the <b>table</b>.
+            </div>
         </div>
 
-        <div class="lesson-card">
-            <h3>3. Verbs (Aiki/Afe-Afe)</h3>
-            <p>Koyi kalmomin da ke nuna aiki ko aikata wani abu.</p>
+        <!-- DARASI NA 2: PRONOUNS -->
+        <div id="lesson-2" class="lesson-detail">
+            <button class="back-btn" onclick="showList()">← Komawa Jerin Darussa</button>
+            <h2>2. Pronouns (Wakilin Suna)</h2>
+            <p>Pronoun shi ne kalmar da ake amfani da ita maimakon Noun don guje wa sake maimaita suna.</p>
+            
+            <div class="example-box">
+                <strong>Misalai:</strong><br>
+                • <b>He</b> (Shine - na namiji)<br>
+                • <b>She</b> (Ita - ta mace)<br>
+                • <b>They</b> (Su - mutane da yawa)<br>
+                • <b>It</b> (Shi/Ita - abu ko dabba)
+            </div>
         </div>
 
-        <div class="lesson-card">
-            <h3>4. Adjectives (Siffa)</h3>
-            <p>Kalmomin da ke siffanta ko faɗaɗa bayani a kan suna.</p>
-        </div>
-
-        <div class="lesson-card">
-            <h3>5. Tenses (Layi ko Lokuta)</h3>
-            <p>Koyi Present, Past, da Future Tenses daki-daki.</p>
+        <!-- DARASI NA 3: VERBS -->
+        <div id="lesson-3" class="lesson-detail">
+            <button class="back-btn" onclick="showList()">← Komawa Jerin Darussa</button>
+            <h2>3. Verbs (Aikatau)</h2>
+            <p>Verb shi ne kalmar da ke nuna aiki, aikata wani abu, ko yanayi.</p>
+            
+            <div class="example-box">
+                <strong>Misalai:</strong><br>
+                • Ali is <b>running</b> (Ali yana gudu).<br>
+                • She <b>reads</b> a book (Tana karanta littafi).
+            </div>
         </div>
     </main>
+
+    <script>
+        function openLesson(lessonId) {
+            document.getElementById('lessons-list').style.display = 'none';
+            var lessons = document.getElementsByClassName('lesson-detail');
+            for (var i = 0; i < lessons.length; i++) {
+                lessons[i].style.display = 'none';
+            }
+            document.getElementById(lessonId).style.display = 'block';
+        }
+
+        function showList() {
+            var lessons = document.getElementsByClassName('lesson-detail');
+            for (var i = 0; i < lessons.length; i++) {
+                lessons[i].style.display = 'none';
+            }
+            document.getElementById('lessons-list').style.display = 'block';
+        }
+    </script>
 
 </body>
 </html>
